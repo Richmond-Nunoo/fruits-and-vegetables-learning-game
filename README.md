@@ -3,22 +3,22 @@ A simple kids learning game to teach fruits and vegetables using emojis, flashca
 
 
 
-✅ Flashcards (Learn Mode)  
-✅ Quiz Mode (Multiple Choice)  
-✅ Spelling Practice Mode  
-✅ Text-to-speech voice playback  
-✅ Cute food emojis  
+- Flashcards (Learn Mode)  
+- Quiz Mode (Multiple Choice)  
+- Spelling Practice Mode  
+- Text-to-speech voice playback  
+- Cute food emojis  
 
 ---
 
-## 🚀 Demo
+##  Demo
 
 > Add a GitHub Pages link here once deployed  
 Example: `https://yourusername.github.io/fruits-and-vegetables-learning-game`
 
 ---
 
-## 📂 Features
+##  Features
 
 - 3 learning modes (Learn / Quiz / Spell)
 - Voice support using Web Speech API
@@ -28,7 +28,7 @@ Example: `https://yourusername.github.io/fruits-and-vegetables-learning-game`
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Tech | Purpose |
 |---|---|
@@ -38,18 +38,18 @@ Example: `https://yourusername.github.io/fruits-and-vegetables-learning-game`
 
 ---
 
-## 🧠 How to Use
+##  How to Use
 
 1. Select category (Fruits / Vegetables / All)
 2. Choose Mode:
-   - 📚 Learn: See and hear names  
-   - 🎯 Quiz: Pick the right answer  
-   - ✏️ Spell: Type the word  
-3. Have fun learning! 🎉
+   -  Learn: See and hear names  
+   -  Quiz: Pick the right answer  
+   -  Spell: Type the word  
+3. Have fun learning! 
 
 ---
 
-## 💻 Local Setup
+##  Local Setup
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/fruits-and-vegetables-learning-game.git
