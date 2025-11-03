@@ -1,0 +1,278 @@
+   * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #ff6b6b;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 5px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .mode-btn.learn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .mode-btn.quiz {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .mode-btn.spell {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .mode-btn.active {
+            transform: scale(1.1);
+        }
+
+        .game-area {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-display {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .item-emoji {
+            font-size: 8em;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .item-name {
+            font-size: 2.5em;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .sound-btn {
+            background: #ffd93d;
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            font-size: 2em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .sound-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .navigation {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .option-btn.correct {
+            background: #51cf66;
+            color: white;
+            border-color: #51cf66;
+        }
+
+        .option-btn.wrong {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .score-board {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .spelling-input {
+            font-size: 2em;
+            padding: 15px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            margin-top: 20px;
+            font-family: inherit;
+        }
+
+        .feedback {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 50px;
+        }
+
+        .feedback.correct {
+            color: #51cf66;
+        }
+
+        .feedback.wrong {
+            color: #ff6b6b;
+        }
+
+        .progress {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .category-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            background: white;
+            color: #667eea;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .item-emoji {
+                font-size: 5em;
+            }
+            
+            .item-name {
+                font-size: 1.8em;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }

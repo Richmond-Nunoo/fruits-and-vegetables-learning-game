@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruits & Vegetables - Learn & Play</title>
+    <!-- <style>
+     
+    </style> -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍎 Fruits & Vegetables 🥕</h1>
+            <p style="color: #666; font-size: 1.2em;">Learn, Play & Have Fun!</p>
+        </div>
+
+        <div class="category-selector" id="categorySelector">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="fruits">Fruits</button>
+            <button class="category-btn" data-category="vegetables">Vegetables</button>
+        </div>
+
+        <div class="mode-selector">
+            <button class="mode-btn learn active" data-mode="learn">📚 Learn</button>
+            <button class="mode-btn quiz" data-mode="quiz">🎯 Quiz</button>
+            <button class="mode-btn spell" data-mode="spell">✏️ Spelling</button>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <!-- Game content will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const items = [
+            // Fruits
+            { name: 'Apple', emoji: '🍎', category: 'fruits' },
+            { name: 'Banana', emoji: '🍌', category: 'fruits' },
+            { name: 'Orange', emoji: '🍊', category: 'fruits' },
+            { name: 'Grapes', emoji: '🍇', category: 'fruits' },
+            { name: 'Strawberry', emoji: '🍓', category: 'fruits' },
+            { name: 'Watermelon', emoji: '🍉', category: 'fruits' },
+            { name: 'Pineapple', emoji: '🍍', category: 'fruits' },
+            
+            // Vegetables
+            { name: 'Carrot', emoji: '🥕', category: 'vegetables' },
+            { name: 'Mushroom', emoji: '🍄', category: 'vegetables' },
+            { name: 'Tomato', emoji: '🍅', category: 'vegetables' },
+            { name: 'Potato', emoji: '🥔', category: 'vegetables' },
+            { name: 'Corn', emoji: '🌽', category: 'vegetables' },
+            { name: 'Garlic', emoji: '🧄', category: 'vegetables' },
+            { name: 'Pepper', emoji: '🌶️', category: 'vegetables' },  
+        ];
+
+        let currentMode = 'learn';
+        let currentIndex = 0;
+        let score = 0;
+        let totalQuestions = 0;
+        let currentCategory = 'all';
+        let filteredItems = [...items];
+
+        const gameArea = document.getElementById('gameArea');
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        // Mode switching
+        modeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentMode = btn.dataset.mode;
+                modeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentIndex = 0;
+                score = 0;
+                totalQuestions = 0;
+                renderGame();
+            });
+        });
+
+        // Category switching
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentCategory = btn.dataset.category;
+                categoryButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (currentCategory === 'all') {
+                    filteredItems = [...items];
+                } else {
+                    filteredItems = items.filter(item => item.category === currentCategory);
+                }
+                
+                currentIndex = 0;
+                score = 0;
+                totalQuestions = 0;
+                renderGame();
+            });
+        });
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playSound(type) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            if (type === 'correct') {
+                oscillator.frequency.value = 523.25;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } else if (type === 'wrong') {
+                oscillator.frequency.value = 200;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            }
+        }
+
+        function renderLearnMode() {
+            const item = filteredItems[currentIndex];
+            gameArea.innerHTML = `
+                <div class="progress">Item ${currentIndex + 1} of ${filteredItems.length}</div>
+                <div class="item-display">
+                    <div class="item-emoji">${item.emoji}</div>
+                    <div class="item-name">${item.name}</div>
+                    <button class="sound-btn" onclick="speak('${item.name}')">🔊</button>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn" onclick="previousItem()" ${currentIndex === 0 ? 'disabled' : ''}>⬅️ Previous</button>
+                    <button class="nav-btn" onclick="nextItem()">Next ➡️</button>
+                </div>
+            `;
+            speak(item.name);
+        }
+
+        function renderQuizMode() {
+            const item = filteredItems[currentIndex];
+            const wrongOptions = filteredItems
+                .filter(i => i.name !== item.name)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+            
+            const options = [item, ...wrongOptions].sort(() => Math.random() - 0.5);
+
+            gameArea.innerHTML = `
+                <div class="progress">Question ${currentIndex + 1} of ${filteredItems.length}</div>
+                <div class="score-board">Score: ${score}/${totalQuestions}</div>
+                <div class="item-display">
+                    <div class="item-emoji">${item.emoji}</div>
+                </div>
+                <div class="quiz-options" id="quizOptions">
+                    ${options.map(opt => `
+                        <button class="option-btn" onclick="checkAnswer('${opt.name}', '${item.name}')">${opt.name}</button>
+                    `).join('')}
+                </div>
+                <div class="feedback" id="feedback"></div>
+            `;
+        }
+
+        function renderSpellMode() {
+            const item = filteredItems[currentIndex];
+            gameArea.innerHTML = `
+                <div class="progress">Word ${currentIndex + 1} of ${filteredItems.length}</div>
+                <div class="score-board">Score: ${score}/${totalQuestions}</div>
+                <div class="item-display">
+                    <div class="item-emoji">${item.emoji}</div>
+                    <button class="sound-btn" onclick="speak('${item.name}')">🔊</button>
+                </div>
+                <input type="text" class="spelling-input" id="spellingInput" placeholder="Type the name..." autocomplete="off">
+                <div class="navigation">
+                    <button class="nav-btn" onclick="checkSpelling('${item.name}')">Check ✓</button>
+                </div>
+                <div class="feedback" id="feedback"></div>
+            `;
+            
+            document.getElementById('spellingInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkSpelling(item.name);
+                }
+            });
+            
+            speak(item.name);
+        }
+
+        function checkAnswer(selected, correct) {
+            totalQuestions++;
+            const feedback = document.getElementById('feedback');
+            const options = document.querySelectorAll('.option-btn');
+            
+            options.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === selected && selected !== correct) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            if (selected === correct) {
+                score++;
+                feedback.textContent = '🎉 Correct! Great job!';
+                feedback.className = 'feedback correct';
+                playSound('correct');
+                speak('Correct');
+            } else {
+                feedback.textContent = `❌ Oops! It's ${correct}`;
+                feedback.className = 'feedback wrong';
+                playSound('wrong');
+                speak(`Wrong. It's ${correct}`);
+            }
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % filteredItems.length;
+                renderGame();
+            }, 2000);
+        }
+
+        function checkSpelling(correct) {
+            const input = document.getElementById('spellingInput');
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = correct.toLowerCase();
+            const feedback = document.getElementById('feedback');
+            
+            totalQuestions++;
+
+            if (userAnswer === correctAnswer) {
+                score++;
+                feedback.textContent = '🎉 Perfect spelling!';
+                feedback.className = 'feedback correct';
+                playSound('correct');
+                speak('Correct');
+            } else {
+                feedback.textContent = `❌ Try again! It's spelled: ${correct}`;
+                feedback.className = 'feedback wrong';
+                playSound('wrong');
+                speak(`Wrong. It's spelled ${correct}`);
+            }
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % filteredItems.length;
+                renderGame();
+            }, 2500);
+        }
+
+        function nextItem() {
+            currentIndex = (currentIndex + 1) % filteredItems.length;
+            renderGame();
+        }
+
+        function previousItem() {
+            currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+            renderGame();
+        }
+
+        function renderGame() {
+            if (currentMode === 'learn') {
+                renderLearnMode();
+            } else if (currentMode === 'quiz') {
+                renderQuizMode();
+            } else if (currentMode === 'spell') {
+                renderSpellMode();
+            }
+        }
+
+        // Initialize
+        renderGame();
+    </script>
+</body>
+</html>
