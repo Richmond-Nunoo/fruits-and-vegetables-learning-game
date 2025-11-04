@@ -14,7 +14,7 @@ A simple kids learning game to teach fruits and vegetables using emojis, flashca
 ##  Demo
 
 > Add a GitHub Pages link here once deployed  
-Example: `https://yourusername.github.io/fruits-and-vegetables-learning-game`
+Example: `https://richmond-nunoo.github.io/fruits-and-vegetables-learning-game/`
 
 ---
 
@@ -47,12 +47,17 @@ Example: `https://yourusername.github.io/fruits-and-vegetables-learning-game`
    -  Spell: Type the word  
 3. Have fun learning! 
 
+
+<img src="./screenshot1.png" width="350">
+<img src="./screenshot2.png" width="350">
+<img src="./screenshot3.png" width="350">
+
 ---
 
 ##  Local Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fruits-and-vegetables-learning-game.git
+git clone https://github.com/Richmond-Nunoo/fruits-and-vegetables-learning-game
 cd fruits-and-vegetables-learning-game
-open index.html  # or double-click index.html
+open index.html 
 
