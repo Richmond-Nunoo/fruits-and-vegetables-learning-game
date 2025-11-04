@@ -48,7 +48,7 @@ Example: `https://richmond-nunoo.github.io/fruits-and-vegetables-learning-game/`
 3. Have fun learning! 
 
 
-<img src="./screenshot1.png" width="350">
+<img src="https://raw.githubusercontent.com/Richmond-Nunoo/fruits-and-vegetables-learning-game/refs/heads/main/Screenshot1.png" width="350">
 <img src="./screenshot2.png" width="350">
 <img src="./screenshot3.png" width="350">
 
